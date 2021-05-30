@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5_请求超时与网络异常</title>
+    <style>
+        #result{
+            width: 200px;
+            height: 90px;
+            border: solid 1px #90b;
+        }
+    </style>
+<body>
+    <button>点我发送请求</button>
+    <div id="result"></div>
+    <script>
+        const btn = document.getElementsByTagName('button')[0];
+        const result = document.getElementById('result');
+        btn.addEventListener('click',function() {
+        const xhr = new XMLHttpRequest();
+        //超时设置2s设置
+        xhr.timeout = 2000;
+        //超时的回调
+        xhr.ontimeout = (params) => {
+            alert('网络异常，请稍后重置！')  
+        }
+
+        //网络异常的回调
+        xhr.onerror = (params) => {
+            alert('你的网络似乎存在异常，请再次检查网络！')
+        }
+          xhr.open('GET','http://127.0.0.1:8000/delay');
+          xhr.send();
+          xhr.onreadystatechange = function(){
+              if(xhr.readyState === 4){
+                  if (xhr.status>=200&&xhr.status<300) {
+                      result.innerHTML = xhr.response;
+                  }
+              }
+          }
+          
+      }) 
+    </script>
+</body>
+</html>

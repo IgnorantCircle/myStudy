@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05_axios创建实例对象</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+<body>
+    <div class="container">
+        <br>
+        <h2>基本使用</h2>
+        
+        <hr>
+        <button type="button" class="btn btn-primary">发送GET请求</button>
+        <button type="button" class="btn btn-warning">发送POST请求</button>
+        <button type="button" class="btn btn-success">发送PUT请求</button>
+        <button type="button" class="btn btn-danger">发送DELETE请求</button>
+    </div>
+
+    <script>
+        //1.获取按钮
+        const btns = document.querySelectorAll('button');
+
+        //创建实例对象 /getJoke
+        const joke = axios.create({
+            baseURL:'https://api.apiopen.top',
+            timeout:2000
+        })
+
+        //创建another实例对象 
+        const another = axios.create({
+            baseURL: 'https://b.com',
+            timeout: 2000
+        });
+
+        //这里  joke 与 axios 对象的功能几近是一样的
+
+        btns[0].onclick = () => {
+            joke({
+                url:'/getJoke',
+            }).then(response =>{
+                console.log(response.data);
+                
+            })
+        }
+        /* 
+            btns[0].onclick = () => {
+                joke.get('/getJoke').then(response =>{
+                console.log(response.data);
+                
+            });
+                
+            } 
+        */
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX Post请求
+    </title>
+    <style>
+        #result{
+            width: 200px;
+            height: 90px;
+            border: solid 1px #90b;
+        }
+    </style>
+</head>
+<body>
+    <div id='result'></div>
+    <script>
+        //1.获取元素对象
+        const result = document.getElementById('result');
+        //2. 绑定事件
+        result.addEventListener("mouseover",() => {
+            //1.创建对象
+            const xhr = new XMLHttpRequest();
+            //2. 初始化，设置类型与URL
+            xhr.open('POST','http://127.0.0.1:8000/server');
+            //设置请求头 通常做身份校验
+            xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+            xhr.setRequestHeader('name','Test'); 
+            //3.发送
+            xhr.send('a=100&b=200&c=300');
+            //xhr.send('a:100&b:200&c:300')
+            //xhr.send('123456')
+            //4.事件绑定
+            xhr.onreadystatechange = () => {
+                //判断
+                if(xhr.readyState===4){
+                    if(xhr.status>=200&&xhr.status<300){
+                        //返回服务端处理结果
+                        result.innerHTML = xhr.response;
+                    }
+                   
+                }
+                
+            }
+            
+        }) 
+    </script>
+</body>
+</html>

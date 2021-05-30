@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03_axios其他使用</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+<body>
+    <div class="container">
+        <br>
+        <h2>基本使用</h2>
+        
+        <hr>
+        <button type="button" class="btn btn-primary">发送GET请求</button>
+        <button type="button" class="btn btn-warning">发送POST请求</button>
+        <button type="button" class="btn btn-success">发送PUT请求</button>
+        <button type="button" class="btn btn-danger">发送DELETE请求</button>
+    </div>
+
+    <script>
+        //1.获取按钮
+        const btns = document.querySelectorAll('button');
+
+        //发送GET请求
+        btns[0].onclick = () => {
+            //与axios()使用方法一样
+            axios.request({
+                method:'GET',
+                url:'http://localhost:3000/comments'
+            }).then(response =>{
+                console.log(response);
+            })
+            
+        }
+
+        //发送POST请求
+        btns[1].onclick = () => {
+           axios.post(
+               'http://localhost:3000/comments',
+               {
+                   "body":'喜大普奔',
+                   "postId":2
+               }
+           ).then(response =>{
+               console.log(response);
+               
+           })
+            
+        }
+        
+    </script>
+</body>
+</html>

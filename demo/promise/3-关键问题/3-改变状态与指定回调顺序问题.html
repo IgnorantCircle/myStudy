@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise关键问题 - Promise 改变状态与指定回调的顺序问题</title>
+</head>
+<body>
+    <script>
+        //先改变状态，再执行回调
+        let p1 = new Promise((resolve, reject) => {
+                resolve('OK');//同步任务
+        });
+
+        p1.then(value => {
+            console.log(value);
+        },reason=>{
+            
+        })
+
+        //先执行回调，再改变状态
+        let p2 = new Promise((resolve, reject) => {
+            //异步任务
+            setTimeout(() => {
+                resolve('OK');
+            },3000)
+                
+        });
+    
+        //then先执行，而不是then里面的回调函数先执行，所以value会再3s后输出
+        p2.then(value => {
+            console.log(value);//状态改变才能拿到数据
+        },reason=>{
+            
+        })
+
+    </script>
+</body>
+</html>

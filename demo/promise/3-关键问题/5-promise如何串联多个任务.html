@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise关键问题 - 如何串联多个任务</title>
+</head>
+<body>
+    <script>
+        let p = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve('OK');
+            }, 1000);
+        });
+
+        p.then(value => {
+            return new Promise((resolve, reject) => {
+                resolve("success");
+            });
+        }).then(value => {
+            console.log(value); //success
+        }).then(value => {
+            console.log(value); //undefined，因为第二个then没有return，所以return undefined，所以
+                                //第二个then的返回结果是一个成功的promise且成功的结果是undefined，而不是返回一个promise对象
+                                //所以第三个then会输出第二个then返回的结果
+        })
+
+    </script>
+</body>
+</html>

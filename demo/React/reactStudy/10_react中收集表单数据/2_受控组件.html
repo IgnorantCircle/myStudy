@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2_受控组件</title>
+</head>
+<body>
+    <!-- 准备好容器 -->
+    <div id="test">    </div>
+    <!--引入react核心库  -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- 引入babel，用于将jsx转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+
+    <!-- 类型为babel，表示里面写的是jsx -->
+    <script type="text/babel">
+      //1.创建组件
+      class Login extends React.Component{
+          //初始化状态
+          state = {
+              username:'', //用户名
+              password:'' //用户密码
+          }
+
+          //保存用户名到状态中
+        saveUsername = (event)=>{
+            this.setState ({username:event.target.value});
+          }
+
+          //保存用户密码到状态中
+          savePassword = (event) =>{
+              this.setState({password:event.target.value})
+          }
+
+          //表单提交的回调
+          handleSubmit = (event)=>{
+              event.preventDefault(); //阻止表单提交
+              console.log(this);
+             const {username,password} = this.state;
+             alert(`你输入的用户名是：${username}，你输入的密码为：${password}`)
+          }
+
+        
+          render(){
+              return(
+                  <form action="https://baidu.com" onSubmit={this.handleSubmit}>
+                    用户名：<input onChange={this.saveUsername} type="text" name="username"/> &nbsp;&nbsp;&nbsp;
+                    用户密码：<input onChange={this.savePassword} type="password" name="password" />
+                    <button>登录</button>
+                  </form>
+              )
+          }
+      }
+
+      //2.渲染组件
+      ReactDOM.render(<Login/>,document.getElementById('test'))
+
+
+      /*
+      页面只能所有输入类的DOM ，比如input框，
+      这种输入类的DOM随着用户的输入维护到状态里，等需要用的时候，
+      直接取出来用。
+      类似于vue中的双向数据绑定，当react中没有双向数据绑定
+      */
+    </script>
+
+
+</body>
+</html>

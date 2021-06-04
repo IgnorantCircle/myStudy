@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4_state精简版</title>
+</head>
+<body>
+    <!-- 准备好容器 -->
+    <div id="test"> </div>
+    <!--引入react核心库  -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- 引入babel，用于将jsx转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <!-- 类型为babel，表示里面写的是jsx -->
+    <script type="text/babel">
+      //1.创建组件
+      class Weather extends React.Component{ 
+      //因为没有传值，所以可以不写构造器，直接初始化状态
+             state = {isHot:false,wind:'微风'}
+            // demo = this.changeWeather.bind(this) //这里改成下面的箭头函数了       
+        render(){
+              const  {isHot,wind} = this.state;  
+              return <h1 onClick={this.changeWeather}>今天天气很{isHot?'炎热':'凉爽'},{wind}</h1>;
+          } 
+      
+       
+          //自定义方法————要用赋值语句的形式+箭头函数
+          //箭头函数没有this，如果在里面写了this，那么就找外侧的this
+        changeWeather = ()=>{ 
+          const isHot = this.state.isHot; 
+          this.setState({isHot:!isHot})
+         // console.log(this); //所以箭头函数的this就是weather的实例对象
+          }
+        }
+
+      //2. 渲染组件到页面
+      ReactDOM.render(<Weather/>,document.getElementById('test'));    
+    </script>
+   
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4_展开运算符</title>
+</head>
+<body>
+    <script type="text/javascript">
+        let arr1 = [1,3,5,7,9];
+        let arr2 = [2,4,6,8,10];
+        console .log(...arr1);//1. 展开一个数组
+        console.log(arr1);//输出数组
+
+
+        let arr3 = [...arr1,...arr2];//2. 拼接数组，把数组1的所有元素拿过了拼接放在前面，然后把数组2的所有元素拿过来拼接放在后面
+        console.log(...arr3);
+        console.log(arr3)
+
+
+        //3. 在函数中使用
+        function sum(...numbers){  
+            return numbers.reduce((preValue,currentValue)=>{
+                return preValue+currentValue;
+            })
+           
+        }
+        console.log(sum(1,2))
+        console.log(sum(1,2,3,4))
+
+        //4.构造字面量对象时使用展开语法 错误写法
+    //     let person = {name:'tom',age:18}
+    //    // console.log(...person)//报错，展开运算符不能直接应用到一个对象身上,即展开运算符不能展开对象
+    //    let person2 = person;
+    //    console.log(person2.name)
+    //    person.name = "jerry";//
+    //    console.log(person2.name)//??为什么要输出Jerry呢，因为let person2 = person并不是复制关系而是引用关系
+      
+    //5.构造字面量对象时使用展开语法正确写法
+    /* let person = {name:'tom',age:18}
+       let person2 = {...person};//这种方法就是复制一个对象，把里面的东西展开了然后填进去
+       console.log(person2.name)
+       person.name = "jerry";
+       console.log(person2)//还是tom
+       console.log(person); //person变了 
+       */
+       
+     //6. 合并对象
+     let person = {name:'tom',age:18}
+     let person3 ={...person, name:'jack',address:"earth"  }
+     console.log(person3);
+    </script>
+
+</body>
+</html>

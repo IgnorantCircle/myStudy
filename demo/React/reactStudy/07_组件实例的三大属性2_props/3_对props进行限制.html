@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3_对props进行限制</title>
+</head>
+<body>
+    <!-- 准备好容器 -->
+    <div id="test">    </div>
+    <div id="test2">    </div>
+    <div id="test3">    </div>
+    <!--引入react核心库  -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- 引入babel，用于将jsx转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <!-- 引入prop-types，用于对组件标签属性进行限制 -->
+    <script type="text/javascript" src="../js/prop-types.js"></script>
+    <!-- 类型为babel，表示里面写的是jsx -->
+    <script type="text/babel">
+      //1.创建组件class
+      class Person extends React.Component{
+          render(){
+              const{name,age,sex}=this.props;//提前取值，下面就不用写this.props.age，直接age就行了
+              //props是只读的，下面这条语句是错误的
+              // this.props.name='jack';
+              return(
+                  <ul>
+                      <li>姓名：{name}</li>
+                      <li>性别：{sex}  </li>
+                      <li>年龄：{age+1} </li>
+                  </ul>
+              )
+          }
+      }
+
+
+    //对标签属性进行类型，必要性的限制【旧版16】
+    Person.propTypes ={//开头小写的propTypes时react中的一个规矩
+        //开头大写的PropTypes时react中的内置对象
+        name:PropTypes.string.isRequired,    //限制数据类型为字符串,且必须填写
+        sex:PropTypes.string,//注意是小写，与JavaScript的内置类型String区分开
+        age:PropTypes.number,//注意是小写，与JavaScript的内置类型Number区分开
+        speak:PropTypes.func,//注意是func，与JavaScript的内置关键字function区分开
+            
+        }
+    
+
+    //指定默认标签属性值
+    Person.defaultProps={
+    sex:'男',//sex的默认值为男
+    age:18  //age默认值为18
+    }
+    
+    //2.渲染组件到页面
+    ReactDOM.render(<Person name="tom" sex="female" age={30}/>,document.getElementById('test'))
+    ReactDOM.render(<Person name="tom" sex="female" age={20}/>,document.getElementById('test2'))
+    
+    const p ={name:"tom",sex:"female",age:18}
+    ReactDOM.render(<Person{...p}/>,document.getElementById('test3'))
+/* 
+    function speak(){
+        console.log('I am speaking')
+    } */
+    </script>
+
+
+</body>
+</html>

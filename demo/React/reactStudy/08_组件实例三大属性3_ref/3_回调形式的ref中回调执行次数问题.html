@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3_回调形式的ref中回调执行次数问题</title>
+</head>
+<body>
+    <!-- 准备好容器 -->
+    <div id="test">    </div>
+    <div id="tes2">    </div>
+    <!--引入react核心库  -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- 引入babel，用于将jsx转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+
+    <!-- 类型为babel，表示里面写的是jsx -->
+    <script type="text/babel">
+    //1. 创建组件
+    class Demo extends React.Component{
+        state ={isHot:true}
+
+        //展示输入框的数据
+        showInfo = ()=>{
+            const {input1} = this  //结构赋值
+        alert(input1.value); 
+            console.log('$',input1.value);
+            }  
+        changeWeather = ()=>{
+            //获取原来的状态
+            const{isHot} =this.state;
+            this.setState({isHot:!isHot})
+        }
+
+        //这是无论怎么变换状态，也不会频繁变换了，因为已经saveInput放在实例自身了
+        saveInput = (c)=>{
+            this.input1=c; 
+            console.log('@',c)
+        }
+        render(){
+            const{isHot}=this.state 
+            return(
+                //下面这种写法是 ref 回调函数是以内联函数的方式定义的，且不是更新,第一次调用时只调用了一次
+                //但加入了changeWeather更新了状态，重复调用render，所以第二次调用时
+                //在更新过程中它会被执行两次，第一次传入参数 null，然后第二次会传入参数 DOM 元素。
+                //这是因为在每次渲染时会创建一个新的函数实例，
+                //所以 React 清空旧的 ref 【传入null】并且设置新的。通过将 ref 的回调函数定义成 class 
+                //的绑定函数的方式可以避免上述问题，但是大多数情况下它是无关紧要的。
+                <div>
+                    <h2>今天天气很{isHot ?'炎热':'凉爽'}</h2><br/>
+                    <button onClick={this.changeWeather}>点我切换天气</button><br/><br/>
+                {  /*<input ref={(currentNode)=>{this.input1=currentNode; console.log('@',currentNode)}} type="text" placeholder="点击按钮提示数据"/>*/ }                   
+                 
+           { /*将 ref 的回调函数定义成 class 的绑定函数的方式*/}
+                    <input ref={this.saveInput} type="text" placeholder="点击按钮提示数据"/> <br/><br/>
+                     <button onClick={this.showInfo}>点我提示输入的数据</button>
+                  
+                </div>
+            )
+        }
+    }
+//总结：内联运行完会释放，在此调用render为保证没错需要清空（传null）再重新运行，类绑定函数不会释放，依然在组件内
+//虽然内联和class形式有所区别，但一般写内联即可，多次调用无关紧要
+    ReactDOM.render(<Demo/>,document.getElementById('test'))
+    </script>
+
+
+</body>
+</html>

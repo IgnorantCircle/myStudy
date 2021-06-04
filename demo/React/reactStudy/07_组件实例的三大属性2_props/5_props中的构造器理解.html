@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5_props中的构造器理解</title>
+</head>
+<body>
+    <!-- 准备好容器 -->
+    <div id="test">    </div>
+    <div id="test2">    </div>
+    <div id="test3">    </div>
+    <!--引入react核心库  -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- 引入babel，用于将jsx转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <!-- 引入prop-types，用于对组件标签属性进行限制 -->
+    <script type="text/javascript" src="../js/prop-types.js"></script>
+    <!-- 类型为babel，表示里面写的是jsx -->
+    <script type="text/babel">
+      //1.创建组件class
+      class Person extends React.Component{
+          //深入探讨：1.接住props之后，传给super和不传给super有什么区别
+           //          2. 类中的构造器可写可不写，它有什么作用呢，它都干了什么呢
+        /* 
+           1.官方文档：如果不初始化在 React 组件挂载之前，会调用它的构造函数。
+           在为 React.Component 子类实现构造函数时，应在其他语句之前前调用 super(props)。
+           否则，this.props 在构造函数中可能会出现未定义的 bug。
+            */
+           //2.官方文档：如果不初始化 state 或不进行方法绑定，则不需要为 React 组件实现构造函数。
+           /* 通常，在 React 中，构造函数仅用于以下两种情况：
+                a)通过给 this.state 赋值对象来初始化内部 state。
+                b)为事件处理函数绑定实例 
+            */
+           constructor(props){
+            console.log(props)
+            /* super()//不写props，this.props undefined
+            console.log('constructor',this.props); 
+            */
+
+            super(props)////写props，this.props为自身的props
+            console.log('constructor',this.props);
+
+            //总结：构造器是否接收props，是否传递给super，取决于：是否希望在构造器中通过this访问props
+            //这种情况很少见，所以构造器基本不写的，能省就省
+        }
+
+            //对标签属性进行类型，必要性的限制【旧版16】
+            static propTypes ={//开头小写的propTypes时react中的一个规矩
+            //开头大写的PropTypes时react中的内置对象
+            name:PropTypes.string.isRequired,    //限制数据类型为字符串,且必须填写
+            sex:PropTypes.string,//注意是小写，与JavaScript的内置类型String区分开
+            age:PropTypes.number,//注意是小写，与JavaScript的内置类型Number区分开
+            }
+            //指定默认标签属性值
+            static defaultProps={
+            sex:'男',//sex的默认值为男
+            age:18  //age默认值为18
+            }
+            render(){
+                const{name,age,sex}=this.props;//提前取值，下面就不用写this.props.age，直接age就行了
+                //props是只读的，下面这条语句是错误的
+                // this.props.name='jack';
+                return(
+                    <ul>
+                        <li>姓名：{name}</li>
+                        <li>性别：{sex}  </li>
+                        <li>年龄：{age+1} </li>
+                    </ul>
+                )
+            }
+      }
+
+    //2.渲染组件到页面
+    ReactDOM.render(<Person name="tom"/>,document.getElementById('test'))
+
+    </script>
+
+
+</body>
+</html>

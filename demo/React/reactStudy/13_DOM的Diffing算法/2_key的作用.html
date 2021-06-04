@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>2_key的作用</title>
+</head>
+<body>
+	<!-- 准备好一个“容器” -->
+	<div id="test"></div>
+	
+	<!-- 引入react核心库 -->
+	<script type="text/javascript" src="../js/17.0.1/react.development.js"></script>
+	<!-- 引入react-dom，用于支持react操作DOM -->
+	<script type="text/javascript" src="../js/17.0.1/react-dom.development.js"></script>
+	<!-- 引入babel，用于将jsx转为js -->
+	<script type="text/javascript" src="../js/17.0.1/babel.min.js"></script>
+
+	<script type="text/babel">
+		class Person extends React.Component{
+			state ={
+				persons:[
+					{id:1,name:'tom',age:18},
+					{id:2,name:'jerry',age:19},
+				]
+			}
+			add = () => {
+				const{persons}= this.state;
+				const p ={id:persons.length+1,name:'mike',age:20};
+				this.setState({persons:[p,...persons]})
+				
+			}
+			render() {
+				return (
+					<div>
+						<h2>展示人员信息</h2>
+						<button onClick={this.add}>add a mike</button>
+						<ul>
+						{
+							this.state.persons.map((personObj,index) => {
+								return <li key={index}>{personObj.name}---{personObj.age}</li>	
+							})
+						}
+
+					</ul>
+
+
+					</div>
+					
+				);
+			}
+		}
+
+		ReactDOM.render(<Person/>,document.getElementById('test'))
+</script>
+</body>
+</html>

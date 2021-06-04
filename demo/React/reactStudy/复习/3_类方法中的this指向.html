@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3_类方法中的this指向</title>
+</head>
+<body>
+    <!-- 准备好容器 -->
+    <div id="test"></div>
+    <!--引入react核心库  -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- 引入babel，用于将jsx转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <!-- 类型为babel，表示里面写的是jsx -->
+    <script type="text/babel">
+      //1.创建组件
+      class Weather extends React.Component{
+        //在这个例子中构造器调用几次？   ————构造器只调用一次，因为只用了一次Weather
+        constructor(props){
+           // console.log('constructor number') //构造器只调用一次
+              super(props);
+              //初始化状态
+              this.state = {isHot:false,wind:'微风'}
+              //解决changeWeather中this指向问题
+             this.demo = this.changeWeather.bind(this)
+          }
+
+
+
+        //在这个例子中render调用几次？   ————1+n次，（1为初始化的那次，n是状态更新的次数）
+        render(){
+
+           console.log('render number')  //render开始时调用一次，然后每次更新state都会进行调用
+            //读取状态
+              const  {isHot,wind} = this.state;
+                //不要写changeWeather()，加()，表示立即函数调用
+                //不写，表示把右边的changeWeather函数赋值给onClick,等onClick点击时才调用changeWeather函数
+                //要写this.changeWeather，否则找不到这个函数
+              return <h1 onClick={this.demo}>今天天气很{isHot?'炎热':'凉爽'},{wind}</h1>;
+          }        
+          //在这个例子中 changeWeather调用几次？   ————n次，即状态更新的次数，点几次调几次
+          changeWeather(){ 
+            console.log('changeWeather number')//n次，即状态更新的次数，而且是先调用changeWeather，然后才是render，
+            //也就是说显示更改数据，然后再是更新页面
+
+            /*  changeWeather放在哪里？  ——Weather的原型对象上，供实例使用
+            由于changeWeather是作为onClick的回调，所以不是通过实例调用的，而是直接调用的，
+             类中的方法默认开启了局部严格模式，所以changeWeather中的this为undefined
+            //console.log(this) */
+
+            //获取原来的isHot的值
+            const isHot = this.state.isHot;
+
+            //状态必须通过setState进行更新，且更新是一种合并，不是替换，也就是说只更改了isHot，而不会去动wind
+            this.setState({isHot:!isHot})
+
+            //不可以直接更改状态里的数据，因为react不认,控制台会输出更改后的效果，但react不会呈现更改后的效果
+            //状态state不可直接更改，下面这一行就是直接更改
+           // this.state.isHot = !(isHot); //这是错误的写法
+            //console.log( this.state.isHot);
+            }
+        }
+  
+        
+      //2. 渲染组件到页面
+      ReactDOM.render(<Weather/>,document.getElementById('test'));
+    
+    </script>
+
+</body>
+</html>

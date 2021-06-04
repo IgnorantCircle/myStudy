@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6_演示函数的柯里化</title>
+</head>
+<body>
+    <script type="text/javascript">
+   //没有用函数柯里化，一般形式
+        /* function sum(a,b,c) {
+            
+            return(a+b+c)
+        } */
+     //函数的柯里化：通过函数调用继续返回函数的方式，实现多次接受参数，最后统一处理的函数编码方式
+    function sum(a) {
+
+        return(b)=>{
+            return(c)=>{
+               return  a+b+c;
+            }
+        }
+        
+    }
+    
+    //const result = sum(1,2,3);
+
+    const result = sum(1)(2)(3);
+    console.log(result);
+    
+    </script>
+</body>
+</html>

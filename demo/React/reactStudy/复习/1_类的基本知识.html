@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1_类的基本知识</title>
+</head>
+<body>
+    <script type="text/javascript">
+    //创建一个Person类
+        class Person{
+            //构造器方法
+            constructor(name,age){
+                //构造器中的this是谁？ ——类的实例对象
+                this.name = name;
+                this.age = age
+            }
+            //一般方法
+            speak(){
+                //speak方法放在了哪里？ ——类的原型对象上，供实例使用
+                //通过Person实例调用speak时，speak中的this就是Person实例
+                console.log(`我叫${this.name},我的年龄是${this.age}`)
+            }
+        }
+
+ /*    //创建一个Person的实例对象
+    const p1=new Person('tom',18);
+    const p2= new Person('jerry',19);
+    console.log(p1);
+    console.log(p2);
+    p1.speak();
+    p2.speak();
+ */
+
+      //创建一个Student类，继承Person类
+      class Student extends Person{
+         
+        constructor(name,age,grade){
+            super(name,age); //继承父类的构造器
+            this.grade = grade;
+            this.school='北大'
+        }
+
+        //重写从父类继承过来的方法
+        speak(){
+            console.log(`我叫${this.name},我的年龄是${this.age},我的年级是${this.grade}，我的学校是${this.school}`)
+        }
+
+        study(){
+            //study方法放在了哪里？ ——类的原型对象上，供实例使用
+            //通过Student实例调用speak时，study中的this就是Student实例
+            console.log('好好学习，天天向上')
+        }
+      }
+     /*  const s1 = new Student('小张',18,'大二');
+      console.log(s1);
+      s1.speak();
+      s1.study(); */
+
+      class Car{
+          constructor(name , price){
+              this.name = name;
+              this.price = price;
+              this.wheel = 4;
+          }
+          //类中可以直接写赋值语句，如下代码的含义是：
+          //给Car的实例对象添加一个属性，名为a，值为1
+          //所以因为构造器里轮子的数量不需要传值，所以可以在类的外面写
+          a = 1;
+          wheel = 4;
+      }
+      const c1 = new Car('Ben',199);
+      const c2 = new Car('宝马',399);
+      console.log(c1)
+      console.log(c2)
+
+      /*
+        总结：
+            1.类中的构造器不是必须写的，要对实例进行一些初始化的操作，如添加指定属性时才写
+            2.如果A类继承了B类，且A类中写了构造器，那么A类构造器中的super是要必须调用的
+            3.类中所定义的方法，都是放在了类的原型对象上，供实例去使用
+            4.类中可以直接写赋值语句
+      */
+    </script>
+</body>
+</html>

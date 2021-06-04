@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1_state</title>
+</head>
+<body>
+    <!-- 准备好容器 -->
+    <div id="test">   </div>
+    <!--引入react核心库  -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- 引入babel，用于将jsx转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+
+    <!-- 类型为babel，表示里面写的是jsx -->
+    <script type="text/babel">
+      //1.创建组件
+      class Weather extends React.Component{
+        constructor(props){
+              super(props);
+              //初始化状态
+              this.state = {isHot:true}
+          }
+
+      
+    
+        render(){
+              //读取状态
+              const  {isHot} = this.state;
+                //不要写changeWeather()，加()，表示立即函数调用
+                //不写，表示把右边的changeWeather函数赋值给onClick,等onClick点击时才调用changeWeather函数
+                //要写this.changeWeather，否则找不到这个函数
+              return <h1 onClick={this.changeWeather}>今天天气很{isHot?'炎热':'凉爽'}</h1>;
+          }
+         
+           //changeWeather放在哪里？  ——Weather的原型对象上，供实例使用
+            //由于changeWeather是作为onClick的回调，所以不是通过实例调用的，而是直接调用的，
+             //类中的方法默认开启了局部严格模式，所以changeWeather中的this为undefined
+          changeWeather(){ 
+            console.log(this)
+            }
+        }
+      //2. 渲染组件到页面
+      ReactDOM.render(<Weather/>,document.getElementById('test'));
+    
+    </script>
+
+ 
+</body>
+</html>

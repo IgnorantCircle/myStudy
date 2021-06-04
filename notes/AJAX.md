@@ -1,3 +1,7 @@
+[TOC]
+
+
+
 # 1 原生AJAX
 
 ## 1.1AJAX简介
@@ -8,7 +12,7 @@
 
 - AJAX 不是新的编程语言，而是一种将现有的标准组合在一起使用的新方式。
 
-# 1.2 XML简介
+## 1.2 XML简介
 
 - XML 可扩展标记语言。
 
@@ -36,7 +40,7 @@
 >
 >  {"name":"孙悟空","age":18,"gender":"男"
 
-# 1.3 AJAX的特点
+## 1.3 AJAX的特点
 
 ### 1.3.1 AJAX的优点
 
@@ -55,7 +59,7 @@
 
 ![](https://cdn.jsdelivr.net/gh/Ignorant-Cirle/images@master/react-study/image.4qokaipu6zo0.png)
 
-###  1.5 AJAX的使用
+##  1.5 AJAX的使用
 
 ### 1.5.1 核心对象
 
@@ -119,7 +123,7 @@ $.get(url, [data], [callback], [type])
 - callback:载入成功时回调函数。 
 - type:设置返回内容格式，xml, html, script, json, text, _default。
 
-# 2.2 post请求
+## 2.2 post请求
 
 $.post(url, [data], [callback], [type]) 
 

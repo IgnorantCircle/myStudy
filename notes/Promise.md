@@ -490,7 +490,7 @@
 
 # 3 自定义（手写）Promise
 
-## 
+> 这部分看文件夹中的代码
 
 # 4 async 与 await
 
@@ -559,7 +559,7 @@
     </script>
 ```
 
-## 4.4  注意
+## 4.4 注意
 
 1. await 必须写在 async 函数中, 但 async 函数中可以没有 await 
 2.  如果 await 的 promise 失败了, 就会抛出异常, 需要通过 try...catch 捕获处理

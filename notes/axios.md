@@ -221,7 +221,7 @@
 
 
 
-## 2 axios源码分析
+# 2 axios源码分析
 
 ## 2.1 源码目录结构
 
@@ -241,7 +241,7 @@
 
    ![](https://cdn.jsdelivr.net/gh/Ignorant-Cirle/images@master/blog/image.4so8u5gvxxq0.png)
 
-### 2.2.2  instance 与 axios 的区别?
+### 2.2.2 instance 与 axios 的区别?
 
 1. 相同：
 
@@ -299,7 +299,7 @@
 
 其他情况类似
 
-### 2.2.4  axios 运行的整体流程?
+### 2.2.4 axios 运行的整体流程?
 
 ![](https://cdn.jsdelivr.net/gh/Ignorant-Cirle/images@master/blog/image.5o7mtk685fg0.png)
 
@@ -313,7 +313,7 @@
 
    
 
-### 2.2.5  axios 的请求/响应拦截器是什么？
+### 2.2.5 axios 的请求/响应拦截器是什么？
 ![](https://cdn.jsdelivr.net/gh/Ignorant-Cirle/images@master/blog/image.ykejnssor1c.png)
 
 1. 请求拦截器:  
@@ -370,7 +370,7 @@ response.data = JSON.parse(response.data)
  }
 ```
 
-### 2.2.8  error 的整体结构
+### 2.2.8 error 的整体结构
 
 ```
 {
@@ -381,7 +381,7 @@ response.data = JSON.parse(response.data)
 
 ```
 
-### 2.2.9  如何取消未完成的请求?
+### 2.2.9 如何取消未完成的请求?
 
 1. 当配置了 cancelToken 对象时, 保存 cancel 函数 
 

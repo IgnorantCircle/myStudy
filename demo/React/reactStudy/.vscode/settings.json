@@ -3,5 +3,6 @@
         "component",
         "unmount",
         "vdom"
-    ]
+    ],
+    "liveServer.settings.port": 5002
 }

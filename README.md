@@ -10,6 +10,7 @@ some study notes and demo
 - promise
 - React
 - Redux
+- TypeScript
 
 # notes
 里面是一些学习笔记
